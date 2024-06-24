@@ -1,0 +1,38 @@
+.modal{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    padding: 40px 50px;
+    margin: auto;
+    backdrop-filter: blur(3px);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.closeButton {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #000000;
+    box-shadow: none;
+    padding: 0%;
+}
+
+.closeButton:hover{
+    border: none;
+    color: red;
+}
+
+li{
+    margin: 10px;
+}
