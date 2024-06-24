@@ -35,7 +35,7 @@ function Login() {
     for (const user of users) {
       if (user.username === inputName) {
         if (user.website === inputPassword) {
-          let id = users[users.length-1].id;
+          let id = user.id;
           let currentUser = { 'username': inputName,
                                 'password': inputPassword,
                                 'id': id

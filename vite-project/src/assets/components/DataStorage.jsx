@@ -42,26 +42,26 @@ function DataStorage() {
         id: parsedUser.id || '',
         name: '',
         username: parsedUser.username || '',
-        email:'',
+        email: '',
         address: {
           ...prevData.address,
-          street:'',
-          suite:'',
-          city:'',
-          zipcode:'',
+          street: '',
+          suite: '',
+          city: '',
+          zipcode: '',
           geo: {
             ...prevData.address.geo,
-            lat:'',
-            lng:''
+            lat: '',
+            lng: ''
           }
         },
-        phone:'',
+        phone: '',
         website: parsedUser.password || '',
         company: {
           ...prevData.company,
-          name:'',
-          catchPhrase:'',
-          bs:''
+          name: '',
+          catchPhrase: '',
+          bs: ''
         }
       }));
     }
@@ -93,7 +93,6 @@ function DataStorage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('User Data:', userData);
     const postOptions = {
       method: 'POST',
       header: {
@@ -102,9 +101,9 @@ function DataStorage() {
       body: JSON.stringify(userData)
     };
     const result = await apiRequest(API_URL, postOptions);
-    if(result){
+    if (result) {
       setFetchErr(result);
-    }else{
+    } else {
       navigate('/home');
     }
   };

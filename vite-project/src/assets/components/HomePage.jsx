@@ -7,13 +7,13 @@ function HomePage() {
     const navigate = useNavigate();
     const [displayInfo, setDisplayInfo]= useState(false);
     const [user, setUser] = useState([]);
-
+    const id = JSON.parse(localStorage.getItem('currentUser')).id;
+    
     useEffect(() => {
-        // id = JSON.parse(localStorage.getItem('currentUser')).id;
-        // const API_URL = `http://localhost:3000/users/${id}`;
+        const API_URL = `http://localhost:3000/users/${id}`;
 
         const fetchData = async () => {
-          const response = await fetch('http://localhost:3000/users/1');
+          const response = await fetch(API_URL);
           const data = await response.json();
           setUser(data);
         };
@@ -27,15 +27,15 @@ function HomePage() {
     };
 
     const handleTodos = () =>{
-        navigate('/todos');
+        navigate(`/users/${id}/todos`);
     };
 
     const handlePosts = () =>{
-        navigate('/posts');
+        navigate(`/users/${id}/posts`);
     };
 
     const handleAlbums = () =>{
-        navigate('/albums');
+        navigate(`/users/${id}/albums`);
     };
 
     const handleInfo = () =>{
@@ -65,7 +65,7 @@ function HomePage() {
                     logout
                 </button>
             </nav>
-            <h1 className={styles.title}>{`Hello, ${user.name}!`}</h1>
+            <h1 className={styles.title}>{`Hello, ${user.name? user.name: 'Name'}!`}</h1>
             {displayInfo && <Info userObj={user} closeInfo={closeInfo}/>}
         </>
 
