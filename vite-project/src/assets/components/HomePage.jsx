@@ -1,6 +1,6 @@
 import styles from './HomePage.module.css';
 import React, { useState , useEffect} from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate , Outlet} from 'react-router-dom';
 import Info from './Info';
 
 function HomePage() {
@@ -27,15 +27,15 @@ function HomePage() {
     };
 
     const handleTodos = () =>{
-        navigate(`/users/${id}/todos`);
+        navigate(`/home/users/${id}/todos`);
     };
 
     const handlePosts = () =>{
-        navigate(`/users/${id}/posts`);
+        navigate(`/home/users/${id}/posts`);
     };
 
     const handleAlbums = () =>{
-        navigate(`/users/${id}/albums`);
+        navigate(`/home/users/${id}/albums`);
     };
 
     const handleInfo = () =>{
@@ -67,6 +67,7 @@ function HomePage() {
             </nav>
             <h1 className={styles.title}>{`Hello, ${user.name? user.name: 'Name'}!`}</h1>
             {displayInfo && <Info userObj={user} closeInfo={closeInfo}/>}
+            <Outlet/>
         </>
 
     )

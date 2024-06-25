@@ -11,13 +11,15 @@ import Todos from './assets/components/Todos.jsx';
 function App() {
   return (
     <Routes>
-        <Route path="/users" element={<Users/>} />
-        <Route path='users/:id/posts' element={<Posts/>} />
-        <Route path="/login" element={<Login/>} />
-        <Route path="/register" element={<Register/>} />
-        <Route path="/datastorage" element={<DataStorage/>} />
-        <Route path='/home' element={<HomePage/>} />
-        <Route path='users/:id/todos' element={<Todos/>} />
+      <Route path="/users" element={<Users />} />
+
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/datastorage" element={<DataStorage />} />
+      <Route path='/home' element={<HomePage />} >
+        <Route path='users/:id/posts' element={<Posts />} />
+        <Route path='users/:id/todos' element={<Todos />} />
+      </Route>
     </Routes>
   );
 }
