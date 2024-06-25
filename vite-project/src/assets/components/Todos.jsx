@@ -136,12 +136,13 @@ function Todos() {
     };
 
     return (
-        <div>
+        <div className={styles.todoContainer}>
             <input
                 type="text"
                 placeholder="Search..."
                 value={searchTerm}
                 onChange={handleSearchChange}
+                className={styles.search}
             />
             <select onChange={handleSortChange} value={sortCriteria}>
                 <option value="serial">serial</option>
@@ -172,7 +173,7 @@ function Todos() {
                             value={todo.title}
                             onChange={(e) => handleUpdateTodo(index, e.target.value)}
                         />
-                        <button onClick={() => handleDeleteTodo(todo.id)}>Delete</button>
+                        <button onClick={() => handleDeleteTodo(todo.id)}className={styles.dltBtn}>×</button>
                     </li>
                 ))}
             </ul>

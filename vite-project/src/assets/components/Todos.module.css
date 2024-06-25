@@ -1,0 +1,59 @@
+.todoContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
+    border-radius: 10px;
+    padding: 0%;
+    backdrop-filter: blur(3px);
+    margin: auto;
+    width: fit-content;
+margin-top: 40px;
+}
+
+.todoContainer input[type="text"],
+.todoContainer select {
+    margin-bottom: 10px;
+}
+
+.todoContainer input[type="text"]{
+    border: none;
+}
+
+.todoContainer ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.todoContainer ul li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    
+}
+
+.todoContainer input[type="checkbox"] {
+    margin-right: 10px;
+    
+}
+
+.todoContainer button {
+    margin-left: 10px;
+}
+
+.dltBtn{
+    border: none;
+    box-shadow: none;
+    font-size: 22px;
+}
+
+.dltBtn:hover{
+    border: none;
+    color: red;
+}
+
+.search{
+    border-bottom: 1px solid black;
+    margin-bottom: 10px;
+}
