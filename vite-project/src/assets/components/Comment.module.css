@@ -1,0 +1,13 @@
+.commentsContainer{
+    list-style-type: none;
+}
+
+.comment{
+ border-bottom: 1px solid white;
+ margin: 0%;
+ padding: 0%;
+}
+
+.commentEmail{
+    color: rgb(96, 96, 96);
+}
