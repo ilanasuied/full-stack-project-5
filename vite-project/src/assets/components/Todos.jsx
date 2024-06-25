@@ -86,7 +86,6 @@ function Todos() {
         await apiRequest(reqUrl, deleteOptions);
         //display the changes on the screen
         setTodos(todos.filter(todo => todo.id !== id));
-        console.log(id);
     };
 
     const handleUpdateTodo = async (index, newTitle) => {
