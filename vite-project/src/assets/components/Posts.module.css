@@ -77,7 +77,7 @@
 
 .searchBar{
     display: block;
-    margin: 0 auto;
+    margin: 20px auto;
 }
 
 .postBody{
@@ -104,4 +104,27 @@
     border: 1px solid red;
     background-color: rgba(227, 68, 68, 0.2);
 
+}
+
+.addPost {
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px; 
+    backdrop-filter: blur(3px);
+    display: flex;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
+    width: fit-content;
+    flex-wrap: wrap;
+    margin: auto;
+
+}
+
+.addPost button{
+    border: none;
+}
+
+.addPost button:hover{
+    border: none;
 }

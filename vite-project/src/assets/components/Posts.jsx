@@ -147,7 +147,7 @@ function Posts() {
         value={searchTerm}
         onChange={handleSearchChange}
       />
-      <form onSubmit={handleAddPost}>
+      <form onSubmit={handleAddPost} className={`${styles.addPost} ${styles.inputAdd}`}>
         <input
           type="text"
           placeholder="New Post Title"
