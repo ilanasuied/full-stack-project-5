@@ -65,9 +65,10 @@ function HomePage() {
                     logout
                 </button>
             </nav>
+            <Outlet/>
             <h1 className={styles.title}>{`Hello, ${user.name? user.name: 'Name'}!`}</h1>
             {displayInfo && <Info userObj={user} closeInfo={closeInfo}/>}
-            <Outlet/>
+            
         </>
 
     )
