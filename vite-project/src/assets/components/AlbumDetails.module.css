@@ -1,0 +1,157 @@
+.albumDetailsContainer {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    color: #333;
+}
+
+h1 {
+    font-size: 3em;
+    color: transparent;
+    text-align: center;
+    -webkit-text-stroke: 1px black;
+}
+
+.photosList {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 20px;
+}
+
+.photoItem {
+    background-color:none;
+    backdrop-filter: blur(3px);
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    overflow:hidden;
+}
+
+.photoItem:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.photoItem img {
+    max-width: 100%;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.photoItem p {
+    font-size: 1em;
+    color: #000000;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-around;
+}
+
+.actions button {
+    background-color: #b78298;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.actions button:hover {
+    background-color: #ae547aa7;
+}
+
+.editForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.editForm input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #bdc3c7;
+    border-radius: 5px;
+    font-size: 1em;
+    box-sizing:border-box;
+}
+
+.editForm button {
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.editForm button:hover {
+    background-color: #27ae60;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+form input {
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 80%;
+    border: 1px solid #bdc3c7;
+    border-radius: 5px;
+}
+
+form button {
+    background-color: #b78298;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+form button:hover {
+    background-color: #ae547aa7;
+    border: none;
+}
+
+.loadMoreButton {
+    display: block;
+    margin: 20px auto;
+    background-color: #b78298;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.loadMoreButton:hover {
+    background-color: #ae547aa7;
+}
+
+.addItem{
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px; 
+    backdrop-filter: blur(3px);
+    display: flex;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
+    width: fit-content;
+    flex-wrap: wrap;
+    margin: auto;
+}

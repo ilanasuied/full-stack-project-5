@@ -1,0 +1,104 @@
+.albumContainer {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+.searchBar {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #bdc3c7;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.inputAdd {
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px; 
+    backdrop-filter: blur(3px);
+    display: flex;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
+    width: fit-content;
+    flex-wrap: wrap;
+    margin: auto;
+}
+
+.inputAdd input {
+    flex-grow: 1;
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #bdc3c7;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+.inputAdd button {
+    background-color: #b78298;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.inputAdd button:hover {
+    background-color: #ae547aa7;
+}
+
+.albumList {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 20px;
+}
+
+.albumItem {
+    background-color: none;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+    height: 200px; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(3px);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 1);
+}
+
+.albumItem button{
+    box-shadow: none;
+}
+
+.albumItem button:hover{
+    border: none;
+}
+
+
+
+.albumItem:hover {
+    transform: translateY(-5px);
+}
+
+.albumTitle {
+    background: none;
+    border: none;
+    font-size: 1em;
+    color: #000000;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.albumTitle:hover {
+    color: #ffffff;
+}

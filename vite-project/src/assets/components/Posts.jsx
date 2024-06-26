@@ -167,7 +167,7 @@ function Posts() {
           <li key={post.id} className={styles.postCard}>
             <div className={styles.cardInner}>
               <div className={styles.cardFront}>
-                {index + 1} <br />
+                {post.id} <br />
                 {post.title}
               </div>
               <div className={styles.cardBack}>

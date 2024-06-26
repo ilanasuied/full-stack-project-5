@@ -1,23 +1,23 @@
 import styles from './HomePage.module.css';
-import React, { useState , useEffect} from 'react';
-import { Link, useNavigate , Outlet} from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, Outlet } from 'react-router-dom';
 import Info from './Info';
 
 function HomePage() {
     const navigate = useNavigate();
-    const [displayInfo, setDisplayInfo]= useState(false);
+    const [displayInfo, setDisplayInfo] = useState(false);
     const [user, setUser] = useState([]);
     const id = JSON.parse(localStorage.getItem('currentUser')).id;
-    
+
     useEffect(() => {
         const API_URL = `http://localhost:3000/users/${id}`;
 
         const fetchData = async () => {
-          const response = await fetch(API_URL);
-          const data = await response.json();
-          setUser(data);
+            const response = await fetch(API_URL);
+            const data = await response.json();
+            setUser(data);
         };
-    
+
         fetchData();
     }, []);
 
@@ -26,23 +26,23 @@ function HomePage() {
         navigate('/login');
     };
 
-    const handleTodos = () =>{
+    const handleTodos = () => {
         navigate(`/home/users/${id}/todos`);
     };
 
-    const handlePosts = () =>{
+    const handlePosts = () => {
         navigate(`/home/users/${id}/posts`);
     };
 
-    const handleAlbums = () =>{
+    const handleAlbums = () => {
         navigate(`/home/users/${id}/albums`);
     };
 
-    const handleInfo = () =>{
+    const handleInfo = () => {
         setDisplayInfo(true);
     };
 
-    const closeInfo = () =>{
+    const closeInfo = () => {
         setDisplayInfo(false);
     }
 
@@ -55,20 +55,20 @@ function HomePage() {
                 <button className={styles.navButton} onClick={handleAlbums}>
                     Albums
                 </button>
-                <button className={styles.navButton}onClick={handlePosts}>
+                <button className={styles.navButton} onClick={handlePosts}>
                     Posts
                 </button>
-                <button className={styles.navButton}onClick={handleTodos}>
+                <button className={styles.navButton} onClick={handleTodos}>
                     Todos
                 </button>
                 <button className={`${styles.navButton} ${styles.logoutButton}`} onClick={handleLogout}>
                     logout
                 </button>
             </nav>
-            <Outlet/>
-            <h1 className={styles.title}>{`Hello, ${user.name? user.name: 'Name'}!`}</h1>
-            {displayInfo && <Info userObj={user} closeInfo={closeInfo}/>}
-            
+            <Outlet />
+            <h1 className={styles.title}>{`Hello, ${user.name ? user.name : 'Name'}!`}</h1>
+            {displayInfo && <Info userObj={user} closeInfo={closeInfo} />}
+
         </>
 
     )

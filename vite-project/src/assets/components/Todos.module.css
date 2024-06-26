@@ -38,6 +38,7 @@
 
 }
 
+
 .todoContainer button {
     margin-left: 10px;
 }
@@ -94,4 +95,10 @@
 .addBtnOnSubmit:active{
     border: none;
     background-color: #52515141;
+}
+
+.completed{
+   font-style: italic;
+   text-decoration: line-through;
+    color: gray;
 }
