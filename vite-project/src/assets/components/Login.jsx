@@ -41,7 +41,7 @@ function Login() {
                                 'id': id
                             }
           localStorage.setItem('currentUser', JSON.stringify(currentUser));
-          navigate('/home');
+          navigate('/home', {state: 'home'});
           return;
         }
 

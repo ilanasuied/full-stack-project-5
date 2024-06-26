@@ -104,7 +104,7 @@ function DataStorage() {
     if (result) {
       setFetchErr(result);
     } else {
-      navigate('/home');
+      navigate('/home', {state: 'home'});
     }
   };
 

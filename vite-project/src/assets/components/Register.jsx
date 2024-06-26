@@ -51,6 +51,7 @@ function Register() {
 
         if (inputPassword === inputPasswordVerify) {
             let id = users.length? parseInt(users[users.length-1].id, 10) + 1 : 1;
+            id = id.toString();
             let currentUser = { 'username': inputName,
                                 'password': inputPassword,
                                 'id': id

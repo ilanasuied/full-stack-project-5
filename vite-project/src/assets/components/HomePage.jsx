@@ -1,6 +1,6 @@
 import styles from './HomePage.module.css';
 import React, { useState, useEffect } from 'react';
-import { useNavigate, Outlet } from 'react-router-dom';
+import { useNavigate, Outlet, useLocation } from 'react-router-dom';
 import Info from './Info';
 
 function HomePage() {
@@ -8,7 +8,7 @@ function HomePage() {
     const [displayInfo, setDisplayInfo] = useState(false);
     const [user, setUser] = useState([]);
     const id = JSON.parse(localStorage.getItem('currentUser')).id;
-
+    const location = useLocation();
     useEffect(() => {
         const API_URL = `http://localhost:3000/users/${id}`;
 
@@ -66,8 +66,7 @@ function HomePage() {
                 </button>
             </nav>
             <Outlet />
-            <h1 className={styles.title}>{`Hello, ${user.name ? user.name : 'Name'}!`}</h1>
-            {displayInfo && <Info userObj={user} closeInfo={closeInfo} />}
+            {location.state === 'home' && <h1 className={styles.title}>{`Hello, ${user.name ? user.name : 'Name'}!`}</h1>}            {displayInfo && <Info userObj={user} closeInfo={closeInfo} />}
 
         </>
 
