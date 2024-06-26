@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import apiRequest from './apiRequest';
 
 function Todos() {
+    const [fetchErr, setFetchErr] = useState(false);
     const [todos, setTodos] = useState([]);
     const [idCounter, setIdCounter] = useState(0);
     const [sortCriteria, setSortCriteria] = useState('serial');
@@ -14,11 +15,15 @@ function Todos() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch(API_URL);
-            const data = await response.json();
-            setIdCounter(prevCounter=> data.length + 3);
-            const filteredTodos = data.filter(todo => parseInt(todo.userId, 10) === parseInt(id, 10));
-            setTodos(filteredTodos);
+            try {
+                const response = await fetch(API_URL);
+                const data = await response.json();
+                setIdCounter(prevCounter => data.length + 3);
+                const filteredTodos = data.filter(todo => parseInt(todo.userId, 10) === parseInt(id, 10));
+                setTodos(filteredTodos);
+            } catch {
+                setFetchErr(true);
+            }
         };
         fetchData();
     }, []);
@@ -42,7 +47,7 @@ function Todos() {
         }
         const reqUrl = `${API_URL}/${newTodos[index].id}`;
         const result = await apiRequest(reqUrl, updateOptions);
-        // if(result) //faire lerreur
+        if(result) setFetchErr(true);
     };
 
     const handleSortChange = (event) => {
@@ -83,7 +88,8 @@ function Todos() {
         };
         const reqUrl = `${API_URL}/${id}`;
         //delete the item from the db
-        await apiRequest(reqUrl, deleteOptions);
+        const response = await apiRequest(reqUrl, deleteOptions);
+        if(response) setFetchErr(true);
         //display the changes on the screen
         setTodos(todos.filter(todo => todo.id !== id));
     };
@@ -105,7 +111,7 @@ function Todos() {
         };
         const reqUrl = `${API_URL}/${newTodos[index].id}`;
         const result = await apiRequest(reqUrl, updateOptions);
-        // if(result) //faire lerreur
+        if(result) setFetchErr(true);
 
     };
 
@@ -128,12 +134,14 @@ function Todos() {
             body: JSON.stringify(newTodo)
         };
         const response = await apiRequest(API_URL, createOptions);
-        //faire lerreur
+        if(response) setFetchErr(true);
         const listTodos = [...todos, newTodo];
         setTodos(listTodos);
         setNewTodoTitle('');
-        console.log(newTodo);
     };
+
+
+    if(fetchErr) return <h2>Please reload the page</h2>
 
     return (
         <div className={styles.todoContainer}>
@@ -173,7 +181,7 @@ function Todos() {
                             value={todo.title}
                             onChange={(e) => handleUpdateTodo(index, e.target.value)}
                         />
-                        <button onClick={() => handleDeleteTodo(todo.id)}className={styles.dltBtn}>×</button>
+                        <button onClick={() => handleDeleteTodo(todo.id)} className={styles.dltBtn}>×</button>
                     </li>
                 ))}
             </ul>

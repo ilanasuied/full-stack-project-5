@@ -7,6 +7,7 @@ import Albums from './Albums';
 function AlbumDetails() {
     const { albumId } = useParams();
 
+    const [fetchErr, setFetchErr] = useState(false);
     const [album, setAlbum] = useState(null);
     const [photos, setPhotos] = useState([]);
     const [page, setPage] = useState(1); // Initial page number for pagination
@@ -25,9 +26,13 @@ function AlbumDetails() {
 
     useEffect(() => {
         const fetchAlbumData = async () => {
-            const response = await fetch(API_URL_ALBUM);
-            const data = await response.json();
-            setAlbum(data);
+            try {
+                const response = await fetch(API_URL_ALBUM);
+                const data = await response.json();
+                setAlbum(data);
+            } catch {
+                setFetchErr(true);
+            }
         };
         fetchAlbumData();
     }, []);
@@ -36,24 +41,21 @@ function AlbumDetails() {
 
     const loadMorePhotos = async () => {
         setPage(prevPage => prevPage + 1); // Increment 'page' state to load next page of photos
+        try {
+            const response = await fetch(API_URL_PHOTOS_PER_PAGE);
+            const responseData = await response.json();
+            const photosData = responseData.data; // Extract 'data' array from response
 
-        const response = await fetch(API_URL_PHOTOS_PER_PAGE);
-        const responseData = await response.json();
-        const photosData = responseData.data; // Extract 'data' array from response
+            setPhotos(prevPhotos => [...prevPhotos, ...photosData]);
 
-        setPhotos(prevPhotos => [...prevPhotos, ...photosData]);
-
-        if (photosData.length < PHOTOS_PER_PAGE) {
-            setHasMore(false);
+            if (photosData.length < PHOTOS_PER_PAGE) {
+                setHasMore(false);
+            }
+        } catch {
+            setFetchErr(true);
         }
 
     };
-
-    // Render loading indicator while album data is being fetched
-    if (!album) {
-        return <div>Loading...</div>;
-    }
-
 
 
     const handleAddPhoto = async (event) => {
@@ -89,7 +91,7 @@ function AlbumDetails() {
             const createdPhoto = await response.json();
 
         } catch (error) {
-            console.error('Error adding photo:', error);
+           setFetchErr(true);
         }
     };
 
@@ -103,7 +105,7 @@ function AlbumDetails() {
             await apiRequest(`${API_URL_PHOTOS}/${photoId}`, deleteOptions);
             setPhotos(prevPhotos => prevPhotos.filter(photo => photo.id !== photoId));
         } catch (error) {
-            console.error('Error deleting photo:', error);
+            setFetchErr(true);
         }
         //display the changes on the screen
         setPhotos(photos.filter(photo => photo.id !== photoId));
@@ -136,10 +138,16 @@ function AlbumDetails() {
             await apiRequest(`${API_URL_PHOTOS}/${newPhotos[index].id}`, updateOptions);
 
         } catch (error) {
-            console.error('Error updating photo:', error);
+            setFetchErr(true);
         }
     };
 
+    // Render loading indicator while album data is being fetched
+    if (!album) {
+        return <div>Loading...</div>;
+    }
+
+    if(fetchErr) return <h2>Please Reload The Page</h2>
 
     return (
         <div className={styles.albumDetailsContainer}>

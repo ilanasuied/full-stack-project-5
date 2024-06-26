@@ -3,6 +3,7 @@ import styles from './Comment.module.css';
 import apiRequest from './apiRequest.js';
 
 function Comment({ post, comments, handleAddComment }) {
+  const [fetchErr, setFetchErr] = useState(false);
   const [commentPost, setCommentPost] = useState([]);
   const [newComment, setNewComment] = useState('');
   const [editingCommentId, setEditingCommentId] = useState(null);
@@ -25,7 +26,8 @@ function Comment({ post, comments, handleAddComment }) {
       method: 'DELETE'
     };
     const reqUrl = `http://localhost:3000/comments/${commentId}`;
-    await apiRequest(reqUrl, deleteOptions);
+    const response = await apiRequest(reqUrl, deleteOptions);
+    if (response) setFetchErr(true);
     setCommentPost(commentPost.filter(comment => comment.id !== commentId));
   };
 
@@ -47,14 +49,17 @@ function Comment({ post, comments, handleAddComment }) {
       body: JSON.stringify(updatedComment)
     };
     const reqUrl = `http://localhost:3000/comments/${commentId}`;
-    await apiRequest(reqUrl, updateOptions);
-
+    const response = await apiRequest(reqUrl, updateOptions);
+    if (response) setFetchErr(true);
     setCommentPost(commentPost.map(comment =>
       comment.id === commentId ? { ...comment, body: editingCommentBody } : comment
     ));
     setEditingCommentId(null);
     setEditingCommentBody('');
   };
+
+  
+  if(fetchErr) return <h2>Please reload the page</h2>
 
   return (
     <div>

@@ -5,6 +5,7 @@ import Comment from './Comment.jsx';
 import apiRequest from './apiRequest.js';
 
 function Posts() {
+  const [fetchErr, setFetchErr] = useState(false);
   const [posts, setPosts] = useState([]);
   const [idCounter, setIdCounter] = useState(0);
   const [idCounterComment, setIdCounterComment] = useState(0);
@@ -19,17 +20,23 @@ function Posts() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(API_URL);
-      const data = await response.json();
-      setIdCounter(prevCounter => data.length + 3);
-      const filteredPosts = data.filter(post => parseInt(post.userId, 10) === parseInt(id, 10));
-      setPosts(filteredPosts);
+      try {
+        const response = await fetch(API_URL);
+        const data = await response.json();
+        setIdCounter(prevCounter => data.length + 3);
+        const filteredPosts = data.filter(post => parseInt(post.userId, 10) === parseInt(id, 10));
+        setPosts(filteredPosts);
 
-      const response2 = await fetch('http://localhost:3000/comments');
-      const commentesData = await response2.json();
-      setIdCounterComment(prevCounter => commentesData.length + 3);
-      const filteredComments = commentesData.filter(comment => filteredPosts.some(post => parseInt(comment.postId, 10) === parseInt(post.id, 10)));
-      setComments(filteredComments);
+        const response2 = await fetch('http://localhost:3000/comments');
+        const commentesData = await response2.json();
+        setIdCounterComment(prevCounter => commentesData.length + 3);
+        const filteredComments = commentesData.filter(comment => filteredPosts.some(post => parseInt(comment.postId, 10) === parseInt(post.id, 10)));
+        setComments(filteredComments);
+      }catch{
+        setFetchErr(true);
+      }
+
+      
     };
     fetchData();
   }, []);
@@ -57,7 +64,8 @@ function Posts() {
     };
     const reqUrl = `${API_URL}/${postId}`;
     //delete the item from the db
-    await apiRequest(reqUrl, deleteOptions);
+    const result = await apiRequest(reqUrl, deleteOptions);
+    if(result) setFetchErr(true);
     //display the changes on the screen
     setPosts(posts.filter(post => post.id !== postId));
   };
@@ -84,7 +92,7 @@ function Posts() {
     };
     //send the request and save the new post in the db
     const response = await apiRequest(API_URL, createOptions);
-    //faire lerreur
+    if(response) setFetchErr(true);
     const listPosts = [...posts, newPost];
     setPosts(listPosts);
     setNewPostTitle('');
@@ -110,7 +118,7 @@ function Posts() {
     };
     const reqUrl = `${API_URL}/${newPosts[index].id}`;
     const result = await apiRequest(reqUrl, updateOptions);
-    // if(result) //faire lerreur
+    if(result) setFetchErr(true);
 
   };
 
@@ -121,7 +129,7 @@ function Posts() {
     const itemId = idCounterComment.toString();
     const newComment = {
       postId,
-      id: itemId,  
+      id: itemId,
       email: userEmail,
       body: commentBody
     };
@@ -133,10 +141,12 @@ function Posts() {
       },
       body: JSON.stringify(newComment)
     };
-    await apiRequest('http://localhost:3000/comments', createOptions);
+    const result = await apiRequest('http://localhost:3000/comments', createOptions);
+    if(result) setFetchErr(true);
     setComments([...comments, newComment]);
   };
 
+  if(fetchErr) return <h2>Please reload the page</h2>
   return (
     <div>
       <h1 className={styles.title}>Posts</h1>
@@ -180,7 +190,7 @@ function Posts() {
                     value={post.body}
                     onChange={(e) => handleUpdatePost(index, e.target.value)}
                   />}
-                {!showComments && <button onClick={() => handleDeletePost(post.id)}className={styles.dlt}>delete</button>}
+                {!showComments && <button onClick={() => handleDeletePost(post.id)} className={styles.dlt}>delete</button>}
               </div>
             </div>
           </li>

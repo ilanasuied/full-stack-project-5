@@ -3,6 +3,7 @@ import './loginAndRegister.css';
 import { Link, useNavigate } from 'react-router-dom';
 
 function Login() {
+  const [fetchErr, setFetchErr] = useState(false);
   const [users, setUsers] = useState([]);
   const [inputName, setInputName] = useState('');
   const [inputPassword, setInputPassword] = useState('');
@@ -13,9 +14,13 @@ function Login() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('http://localhost:3000/users');
-      const data = await response.json();
-      setUsers(data);
+      try {
+        const response = await fetch('http://localhost:3000/users');
+        const data = await response.json();
+        setUsers(data);
+      } catch {
+        setFetchErr(true);
+      }
     };
 
     fetchData();
@@ -36,12 +41,13 @@ function Login() {
       if (user.username === inputName) {
         if (user.website === inputPassword) {
           let id = user.id;
-          let currentUser = { 'username': inputName,
-                                'password': inputPassword,
-                                'id': id
-                            }
+          let currentUser = {
+            'username': inputName,
+            'password': inputPassword,
+            'id': id
+          }
           localStorage.setItem('currentUser', JSON.stringify(currentUser));
-          navigate('/home', {state: 'home'});
+          navigate('/home', { state: 'home' });
           return;
         }
 
@@ -66,6 +72,9 @@ function Login() {
     setInputName('');
     setInputPassword('');
   };
+
+  
+  if(fetchErr) return <h2>Please reload the page</h2>
 
   return (
     <div className='background'>

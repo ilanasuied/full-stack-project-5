@@ -4,6 +4,7 @@ import { useNavigate, Outlet, useLocation } from 'react-router-dom';
 import Info from './Info';
 
 function HomePage() {
+    const [fetchErr, setFetchErr] = useState(false);
     const navigate = useNavigate();
     const [displayInfo, setDisplayInfo] = useState(false);
     const [user, setUser] = useState([]);
@@ -11,11 +12,14 @@ function HomePage() {
     const location = useLocation();
     useEffect(() => {
         const API_URL = `http://localhost:3000/users/${id}`;
-
         const fetchData = async () => {
-            const response = await fetch(API_URL);
-            const data = await response.json();
-            setUser(data);
+            try {
+                const response = await fetch(API_URL);
+                const data = await response.json();
+                setUser(data);
+            } catch {
+                setFetchErr(true);
+            }
         };
 
         fetchData();
@@ -46,6 +50,7 @@ function HomePage() {
         setDisplayInfo(false);
     }
 
+    if (fetchErr) return <h2>Please reload the page</h2>
     return (
         <>
             <nav className={styles.navContainer}>

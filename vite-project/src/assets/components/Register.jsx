@@ -3,6 +3,7 @@ import { Link, json, useNavigate } from 'react-router-dom';
 import './loginAndRegister.css';
 
 function Register() {
+    const [fetchErr, setFetchErr] = useState(false);
     const [users, setUsers] = useState([]);
     const [inputName, setInputName] = useState('');
     const [inputPassword, setInputPassword] = useState('');
@@ -13,9 +14,11 @@ function Register() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch('http://localhost:3000/users');
-            const data = await response.json();
-            setUsers(data);
+            try {
+                const response = await fetch('http://localhost:3000/users');
+                const data = await response.json();
+                setUsers(data);
+            } catch { setFetchErr(true); }
         };
 
         fetchData();
@@ -50,12 +53,13 @@ function Register() {
         }
 
         if (inputPassword === inputPasswordVerify) {
-            let id = users.length? parseInt(users[users.length-1].id, 10) + 1 : 1;
+            let id = users.length ? parseInt(users[users.length - 1].id, 10) + 1 : 1;
             id = id.toString();
-            let currentUser = { 'username': inputName,
-                                'password': inputPassword,
-                                'id': id
-                              }
+            let currentUser = {
+                'username': inputName,
+                'password': inputPassword,
+                'id': id
+            }
             localStorage.setItem('currentUser', JSON.stringify(currentUser));
             navigate('/datastorage');
             return;
@@ -71,6 +75,9 @@ function Register() {
         setInputPassword('');
         setInputPasswordVerify('');
     };
+
+
+    if(fetchErr) return <h2>Please reload the page</h2>
 
     return (
         <div className='background'>

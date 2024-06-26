@@ -8,6 +8,7 @@ import HomePage from './assets/components/HomePage.jsx'
 import Todos from './assets/components/Todos.jsx';
 import Albums from './assets/components/Albums.jsx';
 import AlbumDetails from './assets/components/AlbumDetails.jsx';
+import NotFound from './assets/components/NotFound.jsx';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path='users/:id/albums' element={<Albums />} />
           <Route path='users/:id/albums/:albumId/details' element={<AlbumDetails />} />
         </Route>
+        <Route path='*' element={<NotFound />}/>
       </Routes>
     </>
   );

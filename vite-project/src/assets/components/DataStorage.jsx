@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 function DataStorage() {
   const API_URL = 'http://localhost:3000/users';
-  const [fetchErr, setFetchErr] = useState(null);
+  const [fetchErr, setFetchErr] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const navigate = useNavigate();
   const [userData, setUserData] = useState({
@@ -102,16 +102,17 @@ function DataStorage() {
     };
     const result = await apiRequest(API_URL, postOptions);
     if (result) {
-      setFetchErr(result);
+      setFetchErr(true);
     } else {
       navigate('/home', {state: 'home'});
     }
   };
 
+  if(fetchErr) return <h2>Please reload the page</h2>
+
   return (
     <div className='background'>
       <h1 className='title'>Data Storage</h1>
-      {fetchErr && <p>{`Error: ${fetchErr}`}</p>}
       {!fetchErr && <form onSubmit={handleSubmit} className='formContainer dataStorageForm'>
         <input placeholder='Name' type="text" name="name" value={userData.name} onChange={handleChange} />
         <input placeholder='Email' type="email" name="email" value={userData.email} onChange={handleChange} />
