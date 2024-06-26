@@ -128,3 +128,7 @@
 .addPost button:hover{
     border: none;
 }
+
+.inputAdd input{
+    border: none;
+}

@@ -9,7 +9,7 @@
     backdrop-filter: blur(3px);
     margin: auto;
     width: fit-content;
-margin-top: 40px;
+    margin-top: 40px;
 }
 
 .todoContainer input[type="text"],
@@ -17,7 +17,7 @@ margin-top: 40px;
     margin-bottom: 10px;
 }
 
-.todoContainer input[type="text"]{
+.todoContainer input[type="text"] {
     border: none;
 }
 
@@ -30,30 +30,68 @@ margin-top: 40px;
     display: flex;
     align-items: center;
     margin-bottom: 10px;
-    
+
 }
 
 .todoContainer input[type="checkbox"] {
     margin-right: 10px;
-    
+
 }
 
 .todoContainer button {
     margin-left: 10px;
 }
 
-.dltBtn{
+.dltBtn {
     border: none;
     box-shadow: none;
     font-size: 22px;
 }
 
-.dltBtn:hover{
+.dltBtn:hover {
     border: none;
     color: red;
 }
 
-.search{
+.search {
     border-bottom: 1px solid black;
     margin-bottom: 10px;
+}
+
+.select {
+    appearance: none;
+    background: none;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 16px;
+    color: #333;
+    outline: none;
+    cursor: pointer;
+}
+
+/* Add an icon for the dropdown arrow */
+.select {
+    background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg xmlns%3D"http%3A//www.w3.org/2000/svg" viewBox%3D"0 0 24 24" fill%3D"none" stroke%3D"%23333" stroke-width%3D"2" stroke-linecap%3D"round" stroke-linejoin%3D"round" class%3D"feather feather-chevron-down"%3E%3Cpolyline points%3D"6 9 12 15 18 9"%3E%3C/polyline%3E%3C/svg%3E');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+    padding-right: 30px;
+}
+
+/* Remove default arrow for Firefox */
+.select::-ms-expand {
+    display: none;
+}
+
+.addBtnOnSubmit {
+    margin: 0%;
+    padding: 5px 10px;
+    border: none;
+}
+
+.addBtnOnSubmit:hover,
+.addBtnOnSubmit:active{
+    border: none;
+    background-color: #52515141;
 }

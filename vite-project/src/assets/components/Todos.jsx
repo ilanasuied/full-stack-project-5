@@ -144,7 +144,7 @@ function Todos() {
                 onChange={handleSearchChange}
                 className={styles.search}
             />
-            <select onChange={handleSortChange} value={sortCriteria}>
+            <select onChange={handleSortChange} value={sortCriteria} className={styles.select}>
                 <option value="serial">serial</option>
                 <option value="completed">completed</option>
                 <option value="alphabetical">alphabetical</option>
@@ -157,7 +157,7 @@ function Todos() {
                     value={newTodoTitle}
                     onChange={(e) => setNewTodoTitle(e.target.value)}
                 />
-                <button type="submit">Add Todo</button>
+                <button type="submit" className={styles.addBtnOnSubmit}>Add Todo</button>
             </form>
             <ul>
                 {filteredTodos.map((todo, index) => (
