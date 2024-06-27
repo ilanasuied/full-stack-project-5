@@ -4,7 +4,7 @@ import styles from './Posts.module.css';
 import Comment from './Comment.jsx';
 import apiRequest from './apiRequest.js';
 import createOptionObj from './createOptionObj.js';
-
+import generateNextId from './generateNextId.js';
 
 function Posts() {
   const [fetchErr, setFetchErr] = useState(false);
@@ -25,13 +25,13 @@ function Posts() {
       try {
         const response = await fetch(API_URL);
         const data = await response.json();
-        setIdCounter(prevCounter => data.length + 3);
+        setIdCounter(prevCounter => generateNextId(data));
         const filteredPosts = data.filter(post => parseInt(post.userId, 10) === parseInt(id, 10));
         setPosts(filteredPosts);
 
         const response2 = await fetch('http://localhost:3000/comments');
         const commentesData = await response2.json();
-        setIdCounterComment(prevCounter => commentesData.length + 3);
+        setIdCounterComment(prevCounter => generateNextId(commentesData));
         const filteredComments = commentesData.filter(comment => filteredPosts.some(post => parseInt(comment.postId, 10) === parseInt(post.id, 10)));
         setComments(filteredComments);
       }catch{

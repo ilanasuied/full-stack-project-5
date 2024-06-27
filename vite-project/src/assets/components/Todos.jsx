@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import apiRequest from './apiRequest';
 import createOptionObj from './createOptionObj';
-
+import generateNextId from './generateNextId';
 
 function Todos() {
     const [fetchErr, setFetchErr] = useState(false);
@@ -20,7 +20,7 @@ function Todos() {
             try {
                 const response = await fetch(API_URL);
                 const data = await response.json();
-                setIdCounter(prevCounter => data.length + 3);
+                setIdCounter(prevCounter => generateNextId(data));
                 const filteredTodos = data.filter(todo => parseInt(todo.userId, 10) === parseInt(id, 10));
                 setTodos(filteredTodos);
             } catch {

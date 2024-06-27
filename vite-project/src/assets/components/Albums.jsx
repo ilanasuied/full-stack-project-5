@@ -3,7 +3,7 @@ import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import styles from './Albums.module.css';
 import apiRequest from './apiRequest.js';
 import createOptionObj from './createOptionObj.js';
-
+import generateNextId from './generateNextId.js';
 
 function Albums() {
     const API_URL = 'http://localhost:3000/albums';
@@ -20,7 +20,7 @@ function Albums() {
             try {
                 const response = await fetch(API_URL);
                 const data = await response.json();
-                setIdAlbumsCounter(prevCounter => data.length + 3);
+                setIdAlbumsCounter(prevCounter => generateNextId(data));
                 const filteredAlbums = data.filter(album => parseInt(album.userId, 10) === parseInt(id, 10));
                 setAlbums(filteredAlbums);
             }catch{
