@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import styles from './Comment.module.css';
 import apiRequest from './apiRequest.js';
+import createOptionObj from './createOptionObj.js';
+
 
 function Comment({ post, comments, handleAddComment }) {
   const [fetchErr, setFetchErr] = useState(false);
@@ -22,9 +24,7 @@ function Comment({ post, comments, handleAddComment }) {
   };
 
   const handleDeleteComment = async (commentId) => {
-    const deleteOptions = {
-      method: 'DELETE'
-    };
+    const deleteOptions = createOptionObj.deleteOptions();
     const reqUrl = `http://localhost:3000/comments/${commentId}`;
     const response = await apiRequest(reqUrl, deleteOptions);
     if (response) setFetchErr(true);
@@ -41,13 +41,7 @@ function Comment({ post, comments, handleAddComment }) {
       body: editingCommentBody
     };
 
-    const updateOptions = {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(updatedComment)
-    };
+    const updateOptions = createOptionObj.updateOptions(updatedComment);
     const reqUrl = `http://localhost:3000/comments/${commentId}`;
     const response = await apiRequest(reqUrl, updateOptions);
     if (response) setFetchErr(true);

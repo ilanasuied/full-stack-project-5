@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styles from './AlbumDetails.module.css';
 import apiRequest from './apiRequest';
-import Albums from './Albums';
+import createOptionObj from './createOptionObj';
 
 function AlbumDetails() {
     const { albumId } = useParams();
@@ -76,30 +76,16 @@ function AlbumDetails() {
             thumbnailUrl: ''
         });
 
-
         //save the new photo in the db
-        const createOptions = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(newPhoto),
-        };
+        const createOptions = createOptionObj.createOptions(newPhoto);
+        const response = await apiRequest(API_URL_PHOTOS, createOptions);
+        if (response) setFetchErr(true);
 
-        try {
-            const response = await apiRequest(API_URL_PHOTOS, createOptions);
-            const createdPhoto = await response.json();
-
-        } catch (error) {
-           setFetchErr(true);
-        }
     };
 
     const handleDeletePhoto = async (photoId) => {
 
-        const deleteOptions = {
-            method: 'DELETE',
-        };
+        const deleteOptions = createOptionObj.deleteOptions();
 
         try {
             await apiRequest(`${API_URL_PHOTOS}/${photoId}`, deleteOptions);
@@ -126,13 +112,8 @@ function AlbumDetails() {
             title: updatedTitle,
         };
 
-        const updateOptions = {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(updateData),
-        };
+        
+        const updateOptions = createOptionObj.updateOptions(updateData);
 
         try {
             await apiRequest(`${API_URL_PHOTOS}/${newPhotos[index].id}`, updateOptions);
@@ -147,7 +128,7 @@ function AlbumDetails() {
         return <div>Loading...</div>;
     }
 
-    if(fetchErr) return <h2>Please Reload The Page</h2>
+    if (fetchErr) return <h2>Please Reload The Page</h2>
 
     return (
         <div className={styles.albumDetailsContainer}>

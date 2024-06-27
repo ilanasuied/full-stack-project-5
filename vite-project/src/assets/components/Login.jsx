@@ -44,7 +44,8 @@ function Login() {
           let currentUser = {
             'username': inputName,
             'password': inputPassword,
-            'id': id
+            'id': id,
+            'email': user.email
           }
           localStorage.setItem('currentUser', JSON.stringify(currentUser));
           navigate('/home', { state: 'home' });

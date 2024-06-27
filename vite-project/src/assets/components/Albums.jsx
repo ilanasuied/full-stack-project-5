@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import styles from './Albums.module.css';
 import apiRequest from './apiRequest.js';
+import createOptionObj from './createOptionObj.js';
+
 
 function Albums() {
     const API_URL = 'http://localhost:3000/albums';
@@ -58,13 +60,7 @@ function Albums() {
         };
 
         //create the request
-        const createOptions = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(newAlbum)
-        };
+        const createOptions = createOptionObj.createOptions(newAlbum);
         //send the request and save the new post in the db
         const response = await apiRequest(API_URL, createOptions);
         if(response) setFetchErr(true);

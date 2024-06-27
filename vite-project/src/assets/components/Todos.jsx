@@ -2,6 +2,8 @@ import styles from './Todos.module.css';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import apiRequest from './apiRequest';
+import createOptionObj from './createOptionObj';
+
 
 function Todos() {
     const [fetchErr, setFetchErr] = useState(false);
@@ -38,13 +40,7 @@ function Todos() {
 
         //store the change in the db
         const mytodo = newTodos[index];
-        const updateOptions = {
-            method: 'PATCH',
-            hearders: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ completed: mytodo.completed })
-        }
+        const updateOptions = createOptionObj.updateOptions({ completed: mytodo.completed });
         const reqUrl = `${API_URL}/${newTodos[index].id}`;
         const result = await apiRequest(reqUrl, updateOptions);
         if(result) setFetchErr(true);
@@ -83,9 +79,7 @@ function Todos() {
 
     const handleDeleteTodo = async (id) => {
         //create the request 
-        const deleteOptions = {
-            method: 'DELETE'
-        };
+        const deleteOptions = createOptionObj.deleteOptions();
         const reqUrl = `${API_URL}/${id}`;
         //delete the item from the db
         const response = await apiRequest(reqUrl, deleteOptions);
@@ -102,13 +96,7 @@ function Todos() {
 
         //update item in the db
         const mytodo = newTodos[index];
-        const updateOptions = {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ title: mytodo.title })
-        };
+        const updateOptions = createOptionObj.updateOptions({ title: mytodo.title })
         const reqUrl = `${API_URL}/${newTodos[index].id}`;
         const result = await apiRequest(reqUrl, updateOptions);
         if(result) setFetchErr(true);
@@ -126,13 +114,7 @@ function Todos() {
             completed: false
         };
 
-        const createOptions = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(newTodo)
-        };
+        const createOptions = createOptionObj.createOptions(newTodo);
         const response = await apiRequest(API_URL, createOptions);
         if(response) setFetchErr(true);
         const listTodos = [...todos, newTodo];

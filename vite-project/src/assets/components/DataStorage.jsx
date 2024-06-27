@@ -2,6 +2,7 @@ import './loginAndRegister.css'
 import React, { useState, useEffect } from 'react';
 import apiRequest from './apiRequest';
 import { Link, useNavigate } from 'react-router-dom';
+import createOptionObj from './createOptionObj';
 
 function DataStorage() {
   const API_URL = 'http://localhost:3000/users';
@@ -93,17 +94,14 @@ function DataStorage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const postOptions = {
-      method: 'POST',
-      header: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(userData)
-    };
+    const postOptions = createOptionObj.postOptions(userData);
     const result = await apiRequest(API_URL, postOptions);
     if (result) {
       setFetchErr(true);
     } else {
+      let userObj = JSON.parse(localStorage.getItem('currentUser'));
+      userObj.email = userData.email;
+      localStorage.setItem('currentUser', JSON.stringify(userObj));
       navigate('/home', {state: 'home'});
     }
   };

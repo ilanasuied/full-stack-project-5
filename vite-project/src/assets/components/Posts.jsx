@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import styles from './Posts.module.css';
 import Comment from './Comment.jsx';
 import apiRequest from './apiRequest.js';
+import createOptionObj from './createOptionObj.js';
+
 
 function Posts() {
   const [fetchErr, setFetchErr] = useState(false);
@@ -59,9 +61,8 @@ function Posts() {
 
   const handleDeletePost = async (postId) => {
     //create the request 
-    const deleteOptions = {
-      method: 'DELETE'
-    };
+    const deleteOptions = createOptionObj.deleteOptions();
+
     const reqUrl = `${API_URL}/${postId}`;
     //delete the item from the db
     const result = await apiRequest(reqUrl, deleteOptions);
@@ -83,13 +84,7 @@ function Posts() {
     };
 
     //create the request
-    const createOptions = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(newPost)
-    };
+    const createOptions = createOptionObj.createOptions(newPost);
     //send the request and save the new post in the db
     const response = await apiRequest(API_URL, createOptions);
     if(response) setFetchErr(true);
@@ -107,15 +102,8 @@ function Posts() {
 
     //update item in the db
     const myPost = newPosts[index];
-    const updateOptions = {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        body: myPost.body
-      })
-    };
+    const updateOptions = createOptionObj.updateOptions(myPost.body);
+  
     const reqUrl = `${API_URL}/${newPosts[index].id}`;
     const result = await apiRequest(reqUrl, updateOptions);
     if(result) setFetchErr(true);
@@ -134,13 +122,8 @@ function Posts() {
       body: commentBody
     };
 
-    const createOptions = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(newComment)
-    };
+    const createOptions = createOptionObj.createOptions(newComment);
+   
     const result = await apiRequest('http://localhost:3000/comments', createOptions);
     if(result) setFetchErr(true);
     setComments([...comments, newComment]);
